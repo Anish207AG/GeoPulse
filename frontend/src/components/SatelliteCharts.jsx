@@ -315,7 +315,7 @@ export default function SatelliteCharts({
       }}
     >
       <h2 style={{ color: "#f8fafc" }}>
-        📊 Step 25 — Satellite Analysis Charts
+        📊 Satellite Analysis Charts
       </h2>
 
       <p style={styles.muted}>

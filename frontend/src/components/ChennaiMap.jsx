@@ -14,6 +14,7 @@ import {
 } from "react-leaflet";
 
 import "leaflet/dist/leaflet.css";
+import SatelliteCharts from "./SatelliteCharts";
 import ReportExport from "./ReportExport";
 import HistoricalDashboard from "./HistoricalDashboard";
 import StudyAreaControls, { validateStudyArea } from "./StudyAreaControls";
@@ -3489,6 +3490,12 @@ function ChennaiMap() {
 
         <ChangeDetectionResults
           result={changeResults}
+        />
+
+        <SatelliteCharts
+          changeResults={changeResults}
+          vegetationResults={vegetationResults}
+          waterResults={waterResults}
         />
 
         <HistoricalDashboard
