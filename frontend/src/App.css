@@ -1,0 +1,158 @@
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #0b1220;
+  color: #f8fafc;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 7%;
+  border-bottom: 1px solid #253249;
+}
+
+.navbar h2 {
+  margin: 0;
+  color: #38bdf8;
+}
+
+.navbar span {
+  color: #94a3b8;
+  font-size: 14px;
+}
+
+.dashboard {
+  max-width: 1100px;
+  margin: 90px auto;
+  padding: 0 25px;
+}
+
+.tag {
+  color: #38bdf8;
+  letter-spacing: 3px;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+h1 {
+  font-size: 46px;
+  max-width: 750px;
+  line-height: 1.15;
+}
+
+.description {
+  color: #94a3b8;
+  font-size: 17px;
+  line-height: 1.7;
+  max-width: 650px;
+}
+
+.status-card,
+.feature {
+  background: #172337;
+  border: 1px solid #293c55;
+  border-radius: 12px;
+  padding: 24px;
+}
+
+.status-card {
+  margin-top: 35px;
+}
+
+.status-card p,
+.feature p {
+  color: #aab9cb;
+}
+
+.feature-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+  margin-top: 25px;
+}
+
+.feature h3 {
+  color: #7dd3fc;
+}
+
+@media (max-width: 650px) {
+  .navbar {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  h1 {
+    font-size: 34px;
+  }
+
+  .feature-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.map-section {
+  margin-top: 35px;
+  padding: 24px;
+  background: #172337;
+  border: 1px solid #293c55;
+  border-radius: 12px;
+}
+
+.map-section h2 {
+  color: #7dd3fc;
+}
+
+.map-section p {
+  color: #aab9cb;
+}
+
+.map-section .leaflet-container {
+  border-radius: 10px;
+  z-index: 0;
+}
+
+.selected-location {
+  margin-top: 20px;
+  padding: 20px;
+  background: #0b1220;
+  border: 1px solid #293c55;
+  border-radius: 10px;
+}
+
+.selected-location h3 {
+  color: #38bdf8;
+  margin-top: 0;
+}
+
+.selected-location p {
+  color: #cbd5e1;
+  margin: 8px 0;
+}
+
+/* GeoPulse Hero Section - Center Alignment */
+
+.dashboard > .tag,
+.dashboard > h1,
+.dashboard > .description {
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.dashboard > h1 {
+  max-width: 900px;
+  width: 100%;
+}
+
+.dashboard > .description {
+  max-width: 700px;
+  width: 100%;
+  line-height: 1.7;
+}
