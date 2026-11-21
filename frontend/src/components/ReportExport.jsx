@@ -112,6 +112,7 @@ function buildReportRows({
   changeResults,
   vegetationResults,
   waterResults,
+  historicalResults,
 }) {
   const rows = [];
 
@@ -254,6 +255,64 @@ function buildReportRows({
 
     addObservation(rows, `${name} - Before`, result.before, index);
     addObservation(rows, `${name} - After`, result.after, index);
+  }
+
+  if (historicalResults) {
+    const section = "Historical Monitoring";
+
+    // Export only fields actually returned by the historical API.
+    // The API may evolve, so nested summary values are handled safely.
+    function addHistoricalFields(sectionName, object, prefix = "", depth = 0) {
+      if (!object || typeof object !== "object" || depth > 4) return;
+
+      for (const [key, value] of Object.entries(object)) {
+        if (value === null || value === undefined) continue;
+        const label = `${prefix}${key.replace(/_/g, " ")}`;
+
+        if (Array.isArray(value)) {
+          if (value.length === 0) continue;
+          // Arrays of records are handled separately below.
+          if (value.every((item) => item === null || typeof item !== "object")) {
+            addRow(rows, sectionName, label, value.join(", "));
+          }
+        } else if (typeof value === "object") {
+          addHistoricalFields(sectionName, value, `${label} - `, depth + 1);
+        } else {
+          addRow(rows, sectionName, label, value);
+        }
+      }
+    }
+
+    // Avoid duplicating observation records in the report overview.
+    const { observations = [], summary, ...metadata } = historicalResults;
+    addHistoricalFields(section, metadata);
+
+    if (summary && typeof summary === "object") {
+      addHistoricalFields("Historical Summary", summary);
+    }
+
+    if (Array.isArray(observations)) {
+      addRow(rows, section, "Returned observations", observations.length);
+      observations.forEach((observation, index) => {
+        addHistoricalFields(
+          `Historical Observation ${index + 1}`,
+          observation
+        );
+      });
+    }
+
+    addRow(
+      rows,
+      "Historical Data Quality",
+      "Interpretation",
+      "Historical observations are sampled satellite acquisitions, not continuous monitoring."
+    );
+    addRow(
+      rows,
+      "Historical Data Quality",
+      "Caution",
+      "Sparse observations, cloud masking, and differing valid-pixel coverage can affect apparent trends."
+    );
   }
 
   addRow(
@@ -416,6 +475,7 @@ export default function ReportExport({
   changeResults = null,
   vegetationResults = null,
   waterResults = null,
+  historicalResults = null,
 }) {
   const [status, setStatus] = useState("");
 
@@ -424,7 +484,8 @@ export default function ReportExport({
     ndwiResults ||
     changeResults ||
     vegetationResults ||
-    waterResults
+    waterResults ||
+    historicalResults
   );
 
   const reportData = {
@@ -434,6 +495,7 @@ export default function ReportExport({
     changeResults,
     vegetationResults,
     waterResults,
+    historicalResults,
   };
 
   function handleExport(type) {
@@ -523,7 +585,7 @@ export default function ReportExport({
       <p style={{ color: "#94a3b8", fontSize: 12, marginTop: 18 }}>
         Reports contain numerical measurements and metadata
         available from completed analyses. Map images and charts
-        are not included in this initial export version.
+        are not included in this export version.
         Results are not independently verified land-cover changes.
       </p>
     </section>

@@ -1730,6 +1730,7 @@ function ChennaiMap() {
   const [vegetationResults, setVegetationResults] = useState(null);
   const [vegetationStatus, setVegetationStatus] = useState("");
   const [waterResults, setWaterResults] = useState(null);
+  const [historicalResults, setHistoricalResults] = useState(null);
   const [waterStatus, setWaterStatus] = useState("");
 
   // Step 22: Independent before/after comparison results.
@@ -3499,17 +3500,19 @@ function ChennaiMap() {
         />
 
         <HistoricalDashboard
-          key={selectedArea ? `${selectedArea.north}-${selectedArea.south}-${selectedArea.east}-${selectedArea.west}` : "no-area"}
-          selectedArea={selectedArea}
+        key={selectedArea ? `${selectedArea.north}-${selectedArea.south}-${selectedArea.east}-${selectedArea.west}` : "no-area"}
+        selectedArea={selectedArea}
+        onResultsChange={setHistoricalResults}
         />
 
         <ReportExport
-          selectedArea={selectedArea}
-          ndviResults={ndviResults}
-          ndwiResults={ndwiResults}
-          changeResults={changeResults}
-          vegetationResults={vegetationResults}
-          waterResults={waterResults}
+        selectedArea={selectedArea}
+        ndviResults={ndviResults}
+        ndwiResults={ndwiResults}
+        changeResults={changeResults}
+        vegetationResults={vegetationResults}
+        waterResults={waterResults}
+        historicalResults={historicalResults}
         />
       </div>
     </div>
